@@ -11,8 +11,10 @@
     "test:watch": "vitest",
     "db:push": "prisma db push",
     "db:push:turso": "node scripts/push-turso.mjs",
+    "db:migrate:turso": "node scripts/migrate-turso.mjs",
     "db:sql": "prisma migrate diff --from-empty --to-schema-datamodel prisma/schema.prisma --script",
     "db:seed": "tsx prisma/seed.ts",
+    "db:seed:extra": "tsx prisma/seed-extra.ts",
     "db:studio": "prisma studio",
     "db:generate": "prisma generate"
   },
@@ -24,6 +26,7 @@
     "@libsql/client": "^0.14.0",
     "@prisma/adapter-libsql": "^6.2.1",
     "@prisma/client": "^6.2.1",
+    "@vercel/blob": "^2.5.0",
     "clsx": "^2.1.1",
     "inngest": "^4.11.0",
     "lucide-react": "^0.473.0",

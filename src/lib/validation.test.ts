@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { jobSchema, talentSchema, isHoneypotTripped } from "./validation";
+import { jobSchema, talentSchema, isHoneypotTripped, composeLanguages } from "./validation";
 
 const validJob = {
   companyName: "Grupo Industrial Alemão",
@@ -19,7 +19,8 @@ const validTalent = {
   email: "maria@example.com",
   area: "Engenharia",
   seniority: "Sênior",
-  languages: "Alemão avançado + Inglês fluente",
+  germanLevel: "B2",
+  englishLevel: "C1",
   consentData: true as const,
 };
 
@@ -66,5 +67,23 @@ describe("isHoneypotTripped", () => {
     expect(isHoneypotTripped({ website: "   " })).toBe(false);
     expect(isHoneypotTripped({ website: "" })).toBe(false);
     expect(isHoneypotTripped({})).toBe(false);
+  });
+});
+
+describe("talentSchema — idiomas CEFR", () => {
+  it("exige germanLevel e englishLevel", () => {
+    const { germanLevel, ...semAlemao } = validTalent;
+    void germanLevel;
+    expect(talentSchema.safeParse(semAlemao).success).toBe(false);
+  });
+});
+
+describe("composeLanguages", () => {
+  it("compõe o campo legado a partir dos níveis CEFR", () => {
+    expect(composeLanguages("B2", "C1")).toBe("Alemão B2, Inglês C1");
+  });
+  it("ignora nível 'Nenhum'/'None'", () => {
+    expect(composeLanguages("Nenhum", "C1")).toBe("Inglês C1");
+    expect(composeLanguages("None", "None")).toBe("");
   });
 });

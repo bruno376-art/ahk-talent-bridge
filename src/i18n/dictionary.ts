@@ -19,6 +19,8 @@ export interface FormField {
   placeholder?: string;
   options?: string[];
   required?: boolean;
+  /** Rótulo da seção (localizado) para agrupar campos no formulário. */
+  section?: string;
 }
 
 export interface Dictionary {
@@ -116,6 +118,15 @@ export interface Dictionary {
     done: string;
     benefits: { h: string; d: string }[];
     fields: FormField[];
+    cv: {
+      label: string;
+      hint: string;
+      button: string;
+      uploading: string;
+      attached: string;
+      remove: string;
+      error: string;
+    };
   };
   legal: {
     privacyTitle: string;
@@ -333,13 +344,37 @@ export const dict: Record<Lang, Dictionary> = {
         { h: "Sempre gratuito", d: "Candidatos não pagam pelo serviço." },
       ],
       fields: [
-        { name: "fullName", label: "Nome completo", kind: "text", placeholder: "Seu nome", required: true },
-        { name: "email", label: "E-mail", kind: "text", placeholder: "seu@email.com", required: true },
-        { name: "area", label: "Área de interesse", kind: "select", options: ["Engenharia", "Comércio Exterior", "Sustentabilidade", "Recursos Humanos", "Tecnologia", "Finanças"], required: true },
-        { name: "seniority", label: "Senioridade", kind: "select", options: ["Júnior", "Pleno", "Sênior", "Especialista", "Liderança"], required: true },
-        { name: "languages", label: "Idiomas (autoavaliação)", kind: "select", options: ["Alemão avançado + Inglês fluente", "Alemão intermediário + Inglês avançado", "Inglês avançado", "Inglês intermediário"], required: true },
-        { name: "internationalExperience", label: "Experiência internacional", kind: "text", placeholder: "Ex.: 6 anos em multinacional alemã" },
+        // Dados pessoais
+        { section: "Dados pessoais", name: "fullName", label: "Nome completo", kind: "text", placeholder: "Seu nome", required: true },
+        { section: "Dados pessoais", name: "email", label: "E-mail", kind: "text", placeholder: "seu@email.com", required: true },
+        { section: "Dados pessoais", name: "phone", label: "Telefone", kind: "text", placeholder: "+55 11 90000-0000" },
+        { section: "Dados pessoais", name: "city", label: "Cidade / UF", kind: "text", placeholder: "Ex.: São Paulo, SP" },
+        { section: "Dados pessoais", name: "linkedin", label: "LinkedIn", kind: "text", placeholder: "linkedin.com/in/seu-perfil" },
+        // Perfil profissional
+        { section: "Perfil profissional", name: "area", label: "Área de interesse", kind: "select", options: ["Engenharia", "Comércio Exterior", "Sustentabilidade", "Recursos Humanos", "Tecnologia", "Finanças"], required: true },
+        { section: "Perfil profissional", name: "currentRole", label: "Cargo atual / desejado", kind: "text", placeholder: "Ex.: Gerente de Engenharia" },
+        { section: "Perfil profissional", name: "seniority", label: "Senioridade", kind: "select", options: ["Júnior", "Pleno", "Sênior", "Especialista", "Liderança"], required: true },
+        { section: "Perfil profissional", name: "yearsExperience", label: "Anos de experiência", kind: "select", options: ["Menos de 1 ano", "1–3 anos", "3–5 anos", "5–10 anos", "Mais de 10 anos"] },
+        // Idiomas (CEFR)
+        { section: "Idiomas", name: "germanLevel", label: "Alemão (nível CEFR)", kind: "select", options: ["Nenhum", "A1", "A2", "B1", "B2", "C1", "C2 / Nativo"], required: true },
+        { section: "Idiomas", name: "englishLevel", label: "Inglês (nível CEFR)", kind: "select", options: ["Nenhum", "A1", "A2", "B1", "B2", "C1", "C2 / Nativo"], required: true },
+        // Perfil internacional Brasil–Alemanha
+        { section: "Perfil internacional Brasil–Alemanha", name: "germanCompanyExperience", label: "Experiência em empresa alemã / DACH?", kind: "select", options: ["Sim", "Não"] },
+        { section: "Perfil internacional Brasil–Alemanha", name: "internationalExperience", label: "Descreva sua experiência internacional", kind: "text", placeholder: "Ex.: 6 anos em multinacional alemã" },
+        { section: "Perfil internacional Brasil–Alemanha", name: "relocation", label: "Disponibilidade para mudança", kind: "select", options: ["Brasil", "Alemanha", "Ambos", "Somente remoto"] },
+        { section: "Perfil internacional Brasil–Alemanha", name: "workAuthorization", label: "Autorização para trabalhar na UE / Alemanha", kind: "select", options: ["Passaporte UE", "Visto de trabalho", "Em processo", "Não / precisa de patrocínio"] },
+        // Currículo
+        { section: "Currículo", name: "summary", label: "Resumo profissional", kind: "area", placeholder: "Conte em poucas linhas seu perfil, conquistas e objetivos." },
       ],
+      cv: {
+        label: "Currículo em PDF",
+        hint: "Anexe seu CV em PDF (máx. 5 MB). Opcional — o LinkedIn e o resumo acima também ajudam.",
+        button: "Selecionar PDF",
+        uploading: "Enviando…",
+        attached: "Anexado",
+        remove: "Remover",
+        error: "Não foi possível anexar. Você pode enviar sem o CV.",
+      },
     },
     legal: {
       privacyTitle: "Política de Privacidade",
@@ -629,13 +664,37 @@ export const dict: Record<Lang, Dictionary> = {
         { h: "Always free", d: "Candidates never pay for the service." },
       ],
       fields: [
-        { name: "fullName", label: "Full name", kind: "text", placeholder: "Your name", required: true },
-        { name: "email", label: "E-mail", kind: "text", placeholder: "you@email.com", required: true },
-        { name: "area", label: "Area of interest", kind: "select", options: ["Engineering", "Foreign Trade", "Sustainability", "Human Resources", "Technology", "Finance"], required: true },
-        { name: "seniority", label: "Seniority", kind: "select", options: ["Junior", "Mid-level", "Senior", "Specialist", "Leadership"], required: true },
-        { name: "languages", label: "Languages (self-assessment)", kind: "select", options: ["Advanced German + fluent English", "Intermediate German + advanced English", "Advanced English", "Intermediate English"], required: true },
-        { name: "internationalExperience", label: "International experience", kind: "text", placeholder: "e.g. 6 years in a German multinational" },
+        // Personal details
+        { section: "Personal details", name: "fullName", label: "Full name", kind: "text", placeholder: "Your name", required: true },
+        { section: "Personal details", name: "email", label: "E-mail", kind: "text", placeholder: "you@email.com", required: true },
+        { section: "Personal details", name: "phone", label: "Phone", kind: "text", placeholder: "+55 11 90000-0000" },
+        { section: "Personal details", name: "city", label: "City / State", kind: "text", placeholder: "e.g. São Paulo, SP" },
+        { section: "Personal details", name: "linkedin", label: "LinkedIn", kind: "text", placeholder: "linkedin.com/in/your-profile" },
+        // Professional profile
+        { section: "Professional profile", name: "area", label: "Area of interest", kind: "select", options: ["Engineering", "Foreign Trade", "Sustainability", "Human Resources", "Technology", "Finance"], required: true },
+        { section: "Professional profile", name: "currentRole", label: "Current / desired role", kind: "text", placeholder: "e.g. Engineering Manager" },
+        { section: "Professional profile", name: "seniority", label: "Seniority", kind: "select", options: ["Junior", "Mid-level", "Senior", "Specialist", "Leadership"], required: true },
+        { section: "Professional profile", name: "yearsExperience", label: "Years of experience", kind: "select", options: ["Less than 1 year", "1–3 years", "3–5 years", "5–10 years", "More than 10 years"] },
+        // Languages (CEFR)
+        { section: "Languages", name: "germanLevel", label: "German (CEFR level)", kind: "select", options: ["None", "A1", "A2", "B1", "B2", "C1", "C2 / Native"], required: true },
+        { section: "Languages", name: "englishLevel", label: "English (CEFR level)", kind: "select", options: ["None", "A1", "A2", "B1", "B2", "C1", "C2 / Native"], required: true },
+        // International profile Brazil–Germany
+        { section: "Brazil–Germany international profile", name: "germanCompanyExperience", label: "Experience at a German / DACH company?", kind: "select", options: ["Yes", "No"] },
+        { section: "Brazil–Germany international profile", name: "internationalExperience", label: "Describe your international experience", kind: "text", placeholder: "e.g. 6 years in a German multinational" },
+        { section: "Brazil–Germany international profile", name: "relocation", label: "Relocation availability", kind: "select", options: ["Brazil", "Germany", "Both", "Remote only"] },
+        { section: "Brazil–Germany international profile", name: "workAuthorization", label: "Authorization to work in the EU / Germany", kind: "select", options: ["EU passport", "Work visa", "In process", "No / needs sponsorship"] },
+        // Résumé
+        { section: "Résumé", name: "summary", label: "Professional summary", kind: "area", placeholder: "Briefly describe your profile, achievements and goals." },
       ],
+      cv: {
+        label: "Résumé (PDF)",
+        hint: "Attach your résumé as a PDF (max 5 MB). Optional — LinkedIn and the summary above also help.",
+        button: "Choose PDF",
+        uploading: "Uploading…",
+        attached: "Attached",
+        remove: "Remove",
+        error: "Couldn’t attach. You can submit without the résumé.",
+      },
     },
     legal: {
       privacyTitle: "Privacy Policy",

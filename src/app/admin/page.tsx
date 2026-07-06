@@ -162,6 +162,16 @@ export default async function AdminDashboard({
                     <td className={td}>{tt.status}</td>
                     <td className={td}>
                       <span className="inline-flex items-center gap-3">
+                        {tt.cvUrl && (
+                          <a
+                            href={tt.cvUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-ahk-blue font-bold text-[13px] underline"
+                          >
+                            📄 CV
+                          </a>
+                        )}
                         <a
                           href={`/admin/talentos/${tt.id}/export`}
                           className="text-ahk-blue font-bold text-[13px] underline"

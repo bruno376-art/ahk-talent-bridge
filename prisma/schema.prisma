@@ -56,10 +56,28 @@ model Talent {
   id                      String    @id @default(cuid())
   fullName                String
   email                   String
+  // Contato / links
+  phone                   String?
+  city                    String?
+  linkedin                String?
+  // Perfil profissional
   area                    String
+  currentRole             String?
   seniority               String
-  languages               String
+  yearsExperience         String?
+  // Idiomas (escala CEFR) + campo legado agregado p/ matching/exibição
+  languages               String    @default("")
+  germanLevel             String? // Nenhum | A1..C2
+  englishLevel            String? // Nenhum | A1..C2
+  // Perfil internacional Brasil–Alemanha
+  germanCompanyExperience String? // Sim | Não
   internationalExperience String?
+  relocation              String? // Brasil | Alemanha | Ambos | Remoto
+  workAuthorization       String? // Passaporte UE | Visto de trabalho | Em processo | Não
+  // CV
+  summary                 String? // resumo escrito pelo próprio candidato
+  cvUrl                   String? // URL do PDF (Vercel Blob)
+  cvFilename              String?
   rawInput                String    @default("")
   structuredProfile       String? // JSON gerado pela IA (estruturação)
   status                  String    @default("active") // active | inactive | deleted

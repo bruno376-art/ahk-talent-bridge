@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useI18n } from "@/i18n/LanguageProvider";
 import { submitTalent } from "@/app/actions/submit";
 import Field from "./Field";
@@ -18,7 +18,42 @@ export default function TalentForm() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Estado do upload de CV
+  const [cvUrl, setCvUrl] = useState("");
+  const [cvFilename, setCvFilename] = useState("");
+  const [uploading, setUploading] = useState(false);
+  const [cvError, setCvError] = useState<string | null>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
+
   const set = (name: string) => (v: string) => setValues((prev) => ({ ...prev, [name]: v }));
+
+  async function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setCvError(null);
+    setUploading(true);
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+      const res = await fetch("/api/upload-cv", { method: "POST", body: fd });
+      if (!res.ok) throw new Error(String(res.status));
+      const data = await res.json();
+      setCvUrl(data.url);
+      setCvFilename(data.filename);
+    } catch {
+      setCvError(c.cv.error);
+      if (fileRef.current) fileRef.current.value = "";
+    } finally {
+      setUploading(false);
+    }
+  }
+
+  function removeCv() {
+    setCvUrl("");
+    setCvFilename("");
+    setCvError(null);
+    if (fileRef.current) fileRef.current.value = "";
+  }
 
   async function handleSubmit() {
     setError(null);
@@ -29,14 +64,11 @@ export default function TalentForm() {
     }
     setSubmitting(true);
     const res = await submitTalent({
-      fullName: values.fullName,
-      email: values.email,
-      area: values.area,
-      seniority: values.seniority,
-      languages: values.languages,
-      internationalExperience: values.internationalExperience ?? "",
+      ...values,
       consentData: true,
       consentComms,
+      cvUrl,
+      cvFilename,
       website: values.website ?? "",
       lang,
     });
@@ -58,11 +90,34 @@ export default function TalentForm() {
       {submitted ? (
         <SuccessPanel title={c.doneTitle} message={c.done} />
       ) : (
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-6">
           <Honeypot value={values.website ?? ""} onChange={set("website")} />
-          {c.fields.map((f) => (
-            <Field key={f.name} field={f} value={values[f.name] ?? ""} onChange={set(f.name)} />
-          ))}
+
+          {c.fields.map((f, i) => {
+            const showSection = f.section && f.section !== c.fields[i - 1]?.section;
+            const isCvSection = f.name === "summary"; // último campo da seção Currículo
+            return (
+              <div key={f.name} className="flex flex-col gap-4">
+                {showSection && (
+                  <h3 className="text-[13px] font-bold tracking-[1px] uppercase text-ahk-cyan border-b border-brand-border pb-2 mt-1">
+                    {f.section}
+                  </h3>
+                )}
+                <Field field={f} value={values[f.name] ?? ""} onChange={set(f.name)} />
+                {isCvSection && (
+                  <CvUpload
+                    c={c.cv}
+                    fileRef={fileRef}
+                    onFile={handleFile}
+                    uploading={uploading}
+                    cvFilename={cvFilename}
+                    cvError={cvError}
+                    onRemove={removeCv}
+                  />
+                )}
+              </div>
+            );
+          })}
 
           <div className="flex flex-col gap-3">
             <label className="flex gap-[11px] items-start p-4 bg-brand-green-soft border border-[#C7E9DB] rounded-[10px] cursor-pointer">
@@ -91,7 +146,7 @@ export default function TalentForm() {
 
           <button
             onClick={handleSubmit}
-            disabled={submitting}
+            disabled={submitting || uploading}
             className="h-[52px] bg-ahk-blue text-white rounded-lg font-sans font-bold text-[16px] cursor-pointer disabled:opacity-60"
           >
             {submitting ? t.common.submitting : c.submit}
@@ -99,5 +154,54 @@ export default function TalentForm() {
         </div>
       )}
     </FormShell>
+  );
+}
+
+function CvUpload({
+  c,
+  fileRef,
+  onFile,
+  uploading,
+  cvFilename,
+  cvError,
+  onRemove,
+}: {
+  c: { label: string; hint: string; button: string; uploading: string; attached: string; remove: string; error: string };
+  fileRef: React.RefObject<HTMLInputElement | null>;
+  onFile: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  uploading: boolean;
+  cvFilename: string;
+  cvError: string | null;
+  onRemove: () => void;
+}) {
+  return (
+    <div className="border border-dashed border-[#C3CEDC] rounded-[10px] p-4 bg-[#FAFBFD]">
+      <div className="text-[13.5px] font-bold text-ahk-blue mb-1">📄 {c.label}</div>
+      <p className="text-[12.5px] text-brand-muted leading-[1.5] mb-3">{c.hint}</p>
+
+      {cvFilename ? (
+        <div className="flex items-center justify-between gap-3 bg-brand-green-soft border border-[#C7E9DB] rounded-lg px-3 py-2">
+          <span className="text-[13px] text-[#1F8F6B] font-semibold truncate">
+            ✓ {c.attached}: {cvFilename}
+          </span>
+          <button type="button" onClick={onRemove} className="text-[12.5px] text-ahk-red font-bold underline flex-shrink-0">
+            {c.remove}
+          </button>
+        </div>
+      ) : (
+        <label className="inline-flex items-center h-10 px-4 bg-white border-[1.5px] border-[#C3CEDC] text-ahk-blue rounded-md font-bold text-[14px] cursor-pointer">
+          {uploading ? c.uploading : c.button}
+          <input
+            ref={fileRef}
+            type="file"
+            accept="application/pdf"
+            className="hidden"
+            onChange={onFile}
+            disabled={uploading}
+          />
+        </label>
+      )}
+      {cvError && <p className="text-[12.5px] text-ahk-red mt-2">{cvError}</p>}
+    </div>
   );
 }

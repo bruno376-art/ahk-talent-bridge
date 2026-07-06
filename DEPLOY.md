@@ -61,6 +61,26 @@ O `schema.sql` já está versionado. Se mudar o `prisma/schema.prisma`, regenere
 - `/admin/login` → dashboard
 - `/api/inngest` responde 200 e o app Inngest sincroniza
 
+## Atualizar produção após mudanças de schema (form de CV)
+
+Quando o app já está no ar e o schema evolui (ex.: novos campos do CV), **não**
+recrie o banco — rode a migração incremental e, se quiser, o upload de PDF:
+
+```powershell
+$env:DATABASE_URL="libsql://ahk-talent-bridge-xxx.turso.io"
+$env:DATABASE_AUTH_TOKEN="SEU-TOKEN"
+npm run db:migrate:turso   # adiciona as novas colunas do Talent (idempotente)
+npm run db:seed:extra      # opcional: +3 vagas fictícias (não duplica)
+```
+
+### Upload de CV em PDF (Vercel Blob)
+1. Vercel → projeto → **Storage → Create → Blob** → conecte ao projeto.
+2. Isso injeta `BLOB_READ_WRITE_TOKEN` nas env vars automaticamente → **Redeploy**.
+3. Sem esse token, o formulário funciona normalmente e apenas pula o anexo (CV é opcional).
+
+> **Nota LGPD:** a URL do Blob é pública porém não-adivinhável e só aparece no
+> backoffice. Para sigilo estrito, evoluir para storage privado com download autenticado.
+
 ## Notas
 
 - Segredos só na Vercel — `.env` está no `.gitignore`.

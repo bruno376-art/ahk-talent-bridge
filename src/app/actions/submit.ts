@@ -3,7 +3,7 @@
 import { prisma } from "@/lib/db";
 import { audit } from "@/lib/audit";
 import { inngest, EVENTS } from "@/lib/inngest/client";
-import { jobSchema, talentSchema, isHoneypotTripped } from "@/lib/validation";
+import { jobSchema, talentSchema, isHoneypotTripped, composeLanguages } from "@/lib/validation";
 import type { Lang } from "@/i18n/dictionary";
 
 const POLICY_VERSION = "2026-07";
@@ -89,10 +89,23 @@ export async function submitTalent(raw: unknown): Promise<ActionResult> {
       data: {
         fullName: d.fullName,
         email: d.email,
+        phone: d.phone || null,
+        city: d.city || null,
+        linkedin: d.linkedin || null,
         area: d.area,
+        currentRole: d.currentRole || null,
         seniority: d.seniority,
-        languages: d.languages,
-        internationalExperience: d.internationalExperience,
+        yearsExperience: d.yearsExperience || null,
+        germanLevel: d.germanLevel,
+        englishLevel: d.englishLevel,
+        languages: composeLanguages(d.germanLevel, d.englishLevel),
+        germanCompanyExperience: d.germanCompanyExperience || null,
+        internationalExperience: d.internationalExperience || null,
+        relocation: d.relocation || null,
+        workAuthorization: d.workAuthorization || null,
+        summary: d.summary || null,
+        cvUrl: d.cvUrl || null,
+        cvFilename: d.cvFilename || null,
         status: "active",
         submittedLang: d.lang as Lang,
         // Consentimentos SEPARADOS por finalidade (LGPD/GDPR by design).

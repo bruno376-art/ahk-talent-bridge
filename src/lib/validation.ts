@@ -23,17 +23,45 @@ export const jobSchema = z.object({
 export type JobInput = z.infer<typeof jobSchema>;
 
 export const talentSchema = z.object({
+  // Dados pessoais
   fullName: z.string().min(2),
   email: z.string().email(),
+  phone: z.string().optional().default(""),
+  city: z.string().optional().default(""),
+  linkedin: z.string().optional().default(""),
+  // Perfil profissional
   area: z.string().min(1),
+  currentRole: z.string().optional().default(""),
   seniority: z.string().min(1),
-  languages: z.string().min(1),
+  yearsExperience: z.string().optional().default(""),
+  // Idiomas (CEFR)
+  germanLevel: z.string().min(1),
+  englishLevel: z.string().min(1),
+  // Perfil internacional
+  germanCompanyExperience: z.string().optional().default(""),
   internationalExperience: z.string().optional().default(""),
+  relocation: z.string().optional().default(""),
+  workAuthorization: z.string().optional().default(""),
+  // CV
+  summary: z.string().optional().default(""),
+  cvUrl: z.string().url().optional().or(z.literal("")).default(""),
+  cvFilename: z.string().optional().default(""),
+  // Consentimentos + honeypot
   consentData: z.literal(true), // obrigatório (dados + matching IA)
   consentComms: z.boolean().default(false),
   website: z.string().optional(), // honeypot — deve vir vazio
   lang: z.enum(["pt", "en"]).default("pt"),
 });
+
+/** Compõe o campo legado `languages` a partir dos níveis CEFR (p/ matching/exibição). */
+export function composeLanguages(germanLevel: string, englishLevel: string): string {
+  const parts: string[] = [];
+  if (germanLevel && germanLevel !== "Nenhum" && germanLevel !== "None")
+    parts.push(`Alemão ${germanLevel}`);
+  if (englishLevel && englishLevel !== "Nenhum" && englishLevel !== "None")
+    parts.push(`Inglês ${englishLevel}`);
+  return parts.join(", ");
+}
 
 export type TalentInput = z.infer<typeof talentSchema>;
 

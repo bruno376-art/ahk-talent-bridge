@@ -1,3 +1,7 @@
+
+> ahk-talent-bridge@0.1.0 db:sql
+> prisma migrate diff --from-empty --to-schema-datamodel prisma/schema.prisma --script
+
 -- CreateTable
 CREATE TABLE "Company" (
     "id" TEXT NOT NULL PRIMARY KEY,
@@ -41,10 +45,23 @@ CREATE TABLE "Talent" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "fullName" TEXT NOT NULL,
     "email" TEXT NOT NULL,
+    "phone" TEXT,
+    "city" TEXT,
+    "linkedin" TEXT,
     "area" TEXT NOT NULL,
+    "currentRole" TEXT,
     "seniority" TEXT NOT NULL,
-    "languages" TEXT NOT NULL,
+    "yearsExperience" TEXT,
+    "languages" TEXT NOT NULL DEFAULT '',
+    "germanLevel" TEXT,
+    "englishLevel" TEXT,
+    "germanCompanyExperience" TEXT,
     "internationalExperience" TEXT,
+    "relocation" TEXT,
+    "workAuthorization" TEXT,
+    "summary" TEXT,
+    "cvUrl" TEXT,
+    "cvFilename" TEXT,
     "rawInput" TEXT NOT NULL DEFAULT '',
     "structuredProfile" TEXT,
     "status" TEXT NOT NULL DEFAULT 'active',
