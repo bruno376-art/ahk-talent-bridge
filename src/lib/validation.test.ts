@@ -82,8 +82,15 @@ describe("composeLanguages", () => {
   it("compõe o campo legado a partir dos níveis CEFR", () => {
     expect(composeLanguages("B2", "C1")).toBe("Alemão B2, Inglês C1");
   });
-  it("ignora nível 'Nenhum'/'None'", () => {
+  it("ignora nível 'Nenhum'/'None'/'Keine'", () => {
     expect(composeLanguages("Nenhum", "C1")).toBe("Inglês C1");
     expect(composeLanguages("None", "None")).toBe("");
+    expect(composeLanguages("Keine", "B2")).toBe("Inglês B2");
+  });
+});
+
+describe("talentSchema — idioma alemão (de)", () => {
+  it("aceita lang 'de'", () => {
+    expect(talentSchema.safeParse({ ...validTalent, lang: "de" }).success).toBe(true);
   });
 });

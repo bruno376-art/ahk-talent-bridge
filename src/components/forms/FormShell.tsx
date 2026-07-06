@@ -27,7 +27,7 @@ export default function FormShell({
   return (
     <main>
       <div className="bg-ahk-blue text-white">
-        <div className="max-w-shell-narrow mx-auto px-8 pt-[38px] pb-[46px]">
+        <div className="max-w-shell-narrow mx-auto px-5 md:px-8 pt-7 md:pt-[38px] pb-9 md:pb-[46px]">
           <Link
             href="/"
             className="inline-flex items-center gap-2 text-[14px] font-bold text-[#9FB6D2] cursor-pointer mb-[22px] no-underline"
@@ -37,12 +37,12 @@ export default function FormShell({
           <div className="inline-flex items-center gap-2 text-[12px] font-bold tracking-[.5px] uppercase text-brand-green-bright mb-3">
             {eyebrow}
           </div>
-          <h1 className="font-serif font-bold text-[38px] tracking-[-0.4px] mb-[10px]">{title}</h1>
-          <p className="text-[17px] text-ahk-light-blue max-w-[560px]">{sub}</p>
+          <h1 className="font-serif font-bold text-[30px] md:text-[38px] tracking-[-0.4px] mb-[10px]">{title}</h1>
+          <p className="text-[15.5px] md:text-[17px] text-ahk-light-blue max-w-[560px]">{sub}</p>
         </div>
       </div>
 
-      <div className="max-w-shell-narrow mx-auto px-8 pt-11 pb-[84px] grid grid-cols-1 lg:grid-cols-[1fr_1.35fr] gap-10 items-start">
+      <div className="max-w-shell-narrow mx-auto px-5 md:px-8 pt-8 md:pt-11 pb-14 md:pb-[84px] grid grid-cols-1 lg:grid-cols-[1fr_1.35fr] gap-8 lg:gap-10 items-start">
         <aside className="flex flex-col gap-5">
           {benefits.map((b) => (
             <div key={b.h} className="flex gap-[13px] items-start">
@@ -62,7 +62,7 @@ export default function FormShell({
           </div>
         </aside>
 
-        <div className="bg-white border border-brand-border rounded-[16px] p-9 shadow-form">
+        <div className="bg-white border border-brand-border rounded-[16px] p-5 md:p-9 shadow-form">
           {children}
         </div>
       </div>

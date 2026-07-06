@@ -10,13 +10,13 @@ export default function Home({ jobsByLang }: { jobsByLang: Record<Lang, JobView[
   const jobs = jobsByLang[lang] ?? [];
 
   const eyebrow = "text-[13px] font-bold tracking-[1.5px] uppercase text-ahk-cyan";
-  const h2 = "font-serif font-bold text-[38px] text-ahk-blue tracking-[-0.4px]";
+  const h2 = "font-serif font-bold text-[28px] md:text-[38px] text-ahk-blue tracking-[-0.4px]";
 
   return (
     <main>
       {/* ============ HERO ============ */}
       <section className="relative overflow-hidden bg-gradient-to-b from-[#F4F7FB] to-white border-b border-[#EAEFF5]">
-        <div className="max-w-shell mx-auto px-8 pt-20 pb-[90px] grid grid-cols-1 lg:grid-cols-[1.05fr_.95fr] gap-16 items-center">
+        <div className="max-w-shell mx-auto px-5 md:px-8 pt-10 md:pt-20 pb-14 md:pb-[90px] grid grid-cols-1 lg:grid-cols-[1.05fr_.95fr] gap-10 lg:gap-16 items-center">
           <div className="animate-floatUp">
             <div className="inline-flex items-center gap-[9px] py-[7px] px-[14px] bg-white border border-[#D7E0EC] rounded-full mb-[26px]">
               <span className="w-2 h-2 rounded-full bg-ahk-green inline-block" />
@@ -24,27 +24,27 @@ export default function Home({ jobsByLang }: { jobsByLang: Record<Lang, JobView[
                 {t.hero.badge}
               </span>
             </div>
-            <h1 className="font-serif font-bold text-[52px] leading-[1.08] text-ahk-blue tracking-[-0.5px] mb-[22px] text-balance">
+            <h1 className="font-serif font-bold text-[34px] sm:text-[44px] lg:text-[52px] leading-[1.12] lg:leading-[1.08] text-ahk-blue tracking-[-0.5px] mb-[22px] text-balance">
               {t.hero.title}
             </h1>
-            <p className="text-[19px] leading-[1.55] text-[#4C5763] max-w-[520px] mb-[34px]">
+            <p className="text-[16.5px] md:text-[19px] leading-[1.55] text-[#4C5763] max-w-[520px] mb-[34px]">
               {t.hero.sub}
             </p>
             <div className="flex gap-[14px] flex-wrap">
               <Link
                 href="/empresa"
-                className="h-[54px] px-7 bg-ahk-blue text-white rounded-[7px] font-sans font-bold text-[16px] inline-flex items-center gap-[10px] no-underline"
+                className="w-full sm:w-auto justify-center h-[54px] px-7 bg-ahk-blue text-white rounded-[7px] font-sans font-bold text-[16px] inline-flex items-center gap-[10px] no-underline"
               >
                 {t.hero.ctaCompany} <span className="text-[18px]">→</span>
               </Link>
               <Link
                 href="/candidato"
-                className="h-[54px] px-7 bg-white border-[1.5px] border-[#C3CEDC] text-ahk-blue rounded-[7px] font-sans font-bold text-[16px] inline-flex items-center gap-[10px] no-underline"
+                className="w-full sm:w-auto justify-center h-[54px] px-7 bg-white border-[1.5px] border-[#C3CEDC] text-ahk-blue rounded-[7px] font-sans font-bold text-[16px] inline-flex items-center gap-[10px] no-underline"
               >
                 {t.hero.ctaTalent} <span className="text-[18px]">→</span>
               </Link>
             </div>
-            <div className="flex gap-[34px] mt-11 flex-wrap">
+            <div className="flex gap-5 sm:gap-[34px] mt-8 md:mt-11 flex-wrap">
               <Stat value="1.200+" label={t.hero.stats.members} />
               <div className="w-px bg-[#E2E8F0]" />
               <Stat value="1916" label={t.hero.stats.since} />
@@ -55,7 +55,7 @@ export default function Home({ jobsByLang }: { jobsByLang: Record<Lang, JobView[
 
           {/* Bridge motif */}
           <div className="relative animate-floatUp-slow">
-            <div className="bg-white border border-[#E4EAF2] rounded-[18px] p-[34px] shadow-card">
+            <div className="bg-white border border-[#E4EAF2] rounded-[18px] p-5 sm:p-[34px] shadow-card">
               <div className="flex items-center justify-between mb-[10px]">
                 <span className="text-[12px] font-bold tracking-[.5px] uppercase text-[#8A93A0]">
                   {t.hero.cardLabel}
@@ -116,13 +116,13 @@ export default function Home({ jobsByLang }: { jobsByLang: Record<Lang, JobView[
 
       {/* ============ TRUST STRIP ============ */}
       <div className="bg-ahk-blue">
-        <div className="max-w-shell mx-auto px-8 py-4 flex items-center justify-center gap-[14px] flex-wrap text-center">
+        <div className="max-w-shell mx-auto px-5 md:px-8 py-4 flex items-center justify-center gap-[14px] flex-wrap text-center">
           <span className="text-[14px] text-ahk-light-blue font-semibold">🔒 {t.trustStrip}</span>
         </div>
       </div>
 
       {/* ============ COMO FUNCIONA ============ */}
-      <section id="como-funciona" className="max-w-shell mx-auto px-8 pt-24 pb-10 scroll-mt-24">
+      <section id="como-funciona" className="max-w-shell mx-auto px-5 md:px-8 pt-14 md:pt-24 pb-10 scroll-mt-24">
         <div className="text-center max-w-[640px] mx-auto mb-14">
           <div className={`${eyebrow} mb-[14px]`}>{t.how.eyebrow}</div>
           <h2 className={`${h2} mb-[14px]`}>{t.how.title}</h2>
@@ -142,7 +142,7 @@ export default function Home({ jobsByLang }: { jobsByLang: Record<Lang, JobView[
       </section>
 
       {/* ============ VAGAS ============ */}
-      <section id="vagas" className="max-w-shell mx-auto px-8 py-[72px] scroll-mt-24">
+      <section id="vagas" className="max-w-shell mx-auto px-5 md:px-8 py-12 md:py-[72px] scroll-mt-24">
         <div className="flex items-end justify-between gap-6 mb-9 flex-wrap">
           <div>
             <div className={`${eyebrow} mb-3`}>{t.jobs.eyebrow}</div>
@@ -203,8 +203,8 @@ export default function Home({ jobsByLang }: { jobsByLang: Record<Lang, JobView[
 
       {/* ============ DIFERENCIAIS ============ */}
       <section className="bg-[#F4F7FB] border-y border-[#EAEFF5]">
-        <div className="max-w-shell mx-auto px-8 py-[92px]">
-          <div className="max-w-[620px] mb-[52px]">
+        <div className="max-w-shell mx-auto px-5 md:px-8 py-14 md:py-[92px]">
+          <div className="max-w-[620px] mb-9 md:mb-[52px]">
             <div className={`${eyebrow} mb-[14px]`}>{t.diff.eyebrow}</div>
             <h2 className={`${h2} mb-[14px]`}>{t.diff.title}</h2>
             <p className="text-[17px] text-brand-muted">{t.diff.sub}</p>
@@ -227,8 +227,8 @@ export default function Home({ jobsByLang }: { jobsByLang: Record<Lang, JobView[
       </section>
 
       {/* ============ IA ============ */}
-      <section id="ia" className="max-w-shell mx-auto px-8 py-24 scroll-mt-24">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <section id="ia" className="max-w-shell mx-auto px-5 md:px-8 py-14 md:py-24 scroll-mt-24">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <div>
             <div className={`${eyebrow} mb-[14px]`}>{t.ai.eyebrow}</div>
             <h2 className={`${h2} mb-4`}>{t.ai.title}</h2>
@@ -258,7 +258,7 @@ export default function Home({ jobsByLang }: { jobsByLang: Record<Lang, JobView[
           </div>
 
           {/* explainable score panel */}
-          <div className="bg-ahk-blue rounded-[18px] p-9 text-white shadow-card-strong">
+          <div className="bg-ahk-blue rounded-[18px] p-6 md:p-9 text-white shadow-card-strong">
             <div className="flex items-center justify-between mb-6">
               <div>
                 <div className="text-[12px] tracking-[.5px] uppercase text-[#8CA6C6] font-bold">
@@ -295,8 +295,8 @@ export default function Home({ jobsByLang }: { jobsByLang: Record<Lang, JobView[
 
       {/* ============ GOVERNANCA ============ */}
       <section id="governanca" className="bg-gradient-to-b from-[#F4F7FB] to-white border-t border-[#EAEFF5] scroll-mt-24">
-        <div className="max-w-shell mx-auto px-8 py-[92px]">
-          <div className="text-center max-w-[660px] mx-auto mb-[52px]">
+        <div className="max-w-shell mx-auto px-5 md:px-8 py-14 md:py-[92px]">
+          <div className="text-center max-w-[660px] mx-auto mb-9 md:mb-[52px]">
             <div className="inline-flex items-center gap-2 text-[13px] font-bold tracking-[1px] uppercase text-ahk-green bg-brand-green-soft border border-[#C7E9DB] py-[7px] px-[15px] rounded-full mb-[18px]">
               🔐 {t.gov.badge}
             </div>
@@ -324,23 +324,23 @@ export default function Home({ jobsByLang }: { jobsByLang: Record<Lang, JobView[
 
       {/* ============ FINAL CTA ============ */}
       <section className="bg-ahk-blue">
-        <div className="max-w-shell mx-auto px-8 py-[82px] text-center">
-          <h2 className="font-serif font-bold text-[40px] text-white tracking-[-0.4px] mb-4 text-balance">
+        <div className="max-w-shell mx-auto px-5 md:px-8 py-14 md:py-[82px] text-center">
+          <h2 className="font-serif font-bold text-[28px] md:text-[40px] text-white tracking-[-0.4px] mb-4 text-balance">
             {t.final.title}
           </h2>
-          <p className="text-[18px] text-ahk-light-blue max-w-[560px] mx-auto mb-[34px]">
+          <p className="text-[16px] md:text-[18px] text-ahk-light-blue max-w-[560px] mx-auto mb-[34px]">
             {t.final.sub}
           </p>
           <div className="flex gap-[14px] justify-center flex-wrap">
             <Link
               href="/empresa"
-              className="h-[54px] px-[30px] bg-white text-ahk-blue rounded-[7px] font-sans font-bold text-[16px] inline-flex items-center no-underline"
+              className="w-full sm:w-auto justify-center h-[54px] px-[30px] bg-white text-ahk-blue rounded-[7px] font-sans font-bold text-[16px] inline-flex items-center no-underline"
             >
               {t.hero.ctaCompany} →
             </Link>
             <Link
               href="/candidato"
-              className="h-[54px] px-[30px] bg-transparent border-[1.5px] border-[#6B86A8] text-white rounded-[7px] font-sans font-bold text-[16px] inline-flex items-center no-underline"
+              className="w-full sm:w-auto justify-center h-[54px] px-[30px] bg-transparent border-[1.5px] border-[#6B86A8] text-white rounded-[7px] font-sans font-bold text-[16px] inline-flex items-center no-underline"
             >
               {t.hero.ctaTalent} →
             </Link>

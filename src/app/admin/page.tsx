@@ -41,7 +41,7 @@ export default async function AdminDashboard({
   return (
     <main className="min-h-screen bg-[#F4F7FB]">
       <header className="bg-white border-b border-brand-border">
-        <div className="max-w-shell mx-auto px-8 h-[74px] flex items-center justify-between">
+        <div className="max-w-shell mx-auto px-4 md:px-8 min-h-[74px] py-3 flex items-center justify-between flex-wrap gap-3">
           <div className="flex items-center gap-4">
             <Logo />
             <span className="text-[13px] font-bold uppercase tracking-[.5px] text-brand-muted-2">
@@ -63,7 +63,7 @@ export default async function AdminDashboard({
         </div>
       </header>
 
-      <div className="max-w-shell mx-auto px-8 py-8 flex flex-col gap-6">
+      <div className="max-w-shell mx-auto px-4 md:px-8 py-8 flex flex-col gap-6">
         {ran && (
           <div className="bg-brand-green-soft border border-[#C7E9DB] text-[#1F8F6B] rounded-lg px-4 py-3 text-[14px] font-semibold">
             {ran === "matching"
@@ -91,7 +91,7 @@ export default async function AdminDashboard({
         {/* Vagas */}
         <section className={card}>
           <h2 className="font-serif font-bold text-[18px] text-ahk-blue px-4 pt-4">Vagas</h2>
-          <table className="w-full border-collapse mt-2">
+          <div className="overflow-x-auto"><table className="w-full border-collapse mt-2 min-w-[640px]">
             <thead>
               <tr>
                 <th className={th}>Cargo</th>
@@ -126,13 +126,13 @@ export default async function AdminDashboard({
                 </tr>
               )}
             </tbody>
-          </table>
+          </table></div>
         </section>
 
         {/* Talentos */}
         <section className={card}>
           <h2 className="font-serif font-bold text-[18px] text-ahk-blue px-4 pt-4">Talentos</h2>
-          <table className="w-full border-collapse mt-2">
+          <div className="overflow-x-auto"><table className="w-full border-collapse mt-2 min-w-[640px]">
             <thead>
               <tr>
                 <th className={th}>Nome</th>
@@ -192,7 +192,7 @@ export default async function AdminDashboard({
                 </tr>
               )}
             </tbody>
-          </table>
+          </table></div>
         </section>
 
         {/* Matches */}
@@ -200,7 +200,7 @@ export default async function AdminDashboard({
           <h2 className="font-serif font-bold text-[18px] text-ahk-blue px-4 pt-4">
             Top matches
           </h2>
-          <table className="w-full border-collapse mt-2">
+          <div className="overflow-x-auto"><table className="w-full border-collapse mt-2 min-w-[640px]">
             <thead>
               <tr>
                 <th className={th}>Vaga</th>
@@ -226,7 +226,7 @@ export default async function AdminDashboard({
                 </tr>
               )}
             </tbody>
-          </table>
+          </table></div>
         </section>
       </div>
     </main>

@@ -3,7 +3,7 @@
  * (Claude Design) e serve como fonte única de conteúdo da interface.
  */
 
-export const LANGS = ["pt", "en"] as const;
+export const LANGS = ["pt", "en", "de"] as const;
 export type Lang = (typeof LANGS)[number];
 export const DEFAULT_LANG: Lang = "pt";
 
@@ -781,6 +781,327 @@ export const dict: Record<Lang, Dictionary> = {
       ],
     },
     common: { formError: "Please check the required fields.", submitting: "Submitting…" },
+  },
+
+  de: {
+    nav: { how: "So funktioniert es", jobs: "Stellen", ai: "Künstliche Intelligenz", gov: "Governance" },
+    cta: { company: "Für Unternehmen", talent: "Für Talente" },
+    hero: {
+      badge: "Die offizielle Jobbörse der AHK",
+      title: "Wir verbinden Talente und deutsche Unternehmen in Brasilien",
+      sub: "Die offizielle Jobbörse der Deutsch-Brasilianischen Industrie- und Handelskammer für Fachkräfte mit internationalem Profil — institutionelle Kuratierung, unterstützt durch Künstliche Intelligenz.",
+      ctaCompany: "Stelle veröffentlichen",
+      ctaTalent: "Zum Talent-Pool",
+      stats: {
+        members: "Mitgliedsunternehmen",
+        since: "Vertretung der deutschen Wirtschaft",
+        culture: "kultureller DACH-Fit",
+      },
+      cardLabel: "AHK + KI Matching",
+      cardLive: "live",
+      talent: "Talent",
+      company: "Unternehmen",
+      matchName: "Senior-Profil · Deutsch fortgeschritten",
+      matchNote: "Erklärbarer Matching-Score — keine vollautomatisierte Endentscheidung.",
+    },
+    trustStrip:
+      "Institutioneller Service exklusiv für Mitgliedsunternehmen · Konform mit LGPD und DSGVO",
+    how: {
+      eyebrow: "Einfach und reibungslos",
+      title: "So funktioniert es",
+      sub: "Drei Schritte, null Komplexität für die Nutzer:innen. Die AHK übernimmt Kuratierung und Compliance.",
+      steps: [
+        {
+          num: "1",
+          title: "Das Unternehmen veröffentlicht die Stelle",
+          desc: "Ein Mitgliedsunternehmen füllt ein einfaches Formular aus. Die KI standardisiert die Beschreibung automatisch.",
+        },
+        {
+          num: "2",
+          title: "Talente registrieren sich",
+          desc: "Fachkräfte treten dem Talent-Pool bei — mit ausdrücklicher Einwilligung und geführtem Onboarding.",
+        },
+        {
+          num: "3",
+          title: "AHK + KI übernehmen das Matching",
+          desc: "Die KI erzeugt einen erklärbaren Score; die AHK kuratiert und sendet die Shortlist an HR.",
+        },
+      ],
+    },
+    jobs: {
+      eyebrow: "Chancen",
+      title: "Offene Stellen",
+      count: "Wöchentlich aktualisiert",
+      fit: "Passung",
+      details: "Details ansehen",
+    },
+    diff: {
+      eyebrow: "Warum die AHK",
+      title: "Der strategische Vorteil",
+      sub: "Die AHK wird kein Headhunter. Sie wird die vertrauenswürdige Kuratorin für Talente im Ökosystem Deutschland–Brasilien.",
+      items: [
+        {
+          icon: "🏛️",
+          bg: "#EAF1FA",
+          title: "Institutionelle Kuratierung",
+          desc: "Das Vertrauenssiegel der AHK — seit 1916 Vertretung der deutschen Wirtschaft in Brasilien.",
+        },
+        {
+          icon: "🌐",
+          bg: "#E8F6F0",
+          title: "Fokus Deutschland–Brasilien",
+          desc: "Zweisprachige Talente mit internationaler Erfahrung und kulturellem DACH-Fit.",
+        },
+        {
+          icon: "⚡",
+          bg: "#EAF6FC",
+          title: "Intelligentes Matching",
+          desc: "KI für Standardisierung, Matching-Scores und objektive Executive Summaries.",
+        },
+        {
+          icon: "🔐",
+          bg: "#FBF3E6",
+          title: "Datengovernance",
+          desc: "LGPD & DSGVO by design: Einwilligung, Datenminimierung und Transparenz.",
+        },
+      ],
+    },
+    ai: {
+      eyebrow: "Künstliche Intelligenz",
+      title: "KI skaliert die Kuratierung — sie ersetzt keine Menschen",
+      sub: "Als Entscheidungsunterstützung eingesetzt, mit transparenten Kriterien und erklärbarem Score. Keine Entscheidung erfolgt ausschließlich automatisiert.",
+      panelLabel: "Kompatibilitätsanalyse",
+      panelName: "Stelle × Kandidat:in",
+      score: "Passung",
+      summaryLabel: "Executive Summary",
+      summary:
+        "Senior-Fachkraft, Deutsch fortgeschritten, 6 Jahre in deutschem Multinational. Starker kultureller Fit. Leichte technische Lücke in SAP.",
+      functions: [
+        { h: "Standardisierung", d: "Stellen und Profile aus Freitext strukturiert." },
+        { h: "Matching", d: "Score von 0 bis 100 mit kurzer Begründung." },
+        { h: "Executive Summary", d: "objektives Profil für HR in Sekunden." },
+        { h: "Lücken & Risiken", d: "transparente Identifikation von Gaps." },
+        { h: "Bias-Reduktion", d: "objektive, prüfbare Kriterien." },
+      ],
+      principles: ["Entscheidungsunterstützung", "Keine automatisierte Endentscheidung", "Transparente Kriterien"],
+      scoreBreakdown: [
+        { label: "Sprache (Deutsch / Englisch)", val: "96%", pct: "96%" },
+        { label: "Seniorität", val: "92%", pct: "92%" },
+        { label: "Internationale Erfahrung", val: "95%", pct: "95%" },
+        { label: "Kultureller DACH-Fit", val: "90%", pct: "90%" },
+      ],
+    },
+    gov: {
+      badge: "Compliance by design",
+      title: "Datengovernance vom ersten Tag an",
+      sub: "LGPD und DSGVO werden vollständig eingehalten. Ausdrückliche Einwilligung, klare Zweckbindung und Löschung jederzeit.",
+      principles: [
+        {
+          title: "Ausdrückliche Einwilligung",
+          desc: "Klares Opt-in bei der Registrierung, getrennt von der Marketing-Einwilligung.",
+        },
+        { title: "Klare Zweckbindung", desc: "Daten werden ausschließlich zur beruflichen Vermittlung genutzt." },
+        { title: "Datenminimierung", desc: "Wir erheben nur, was für das Matching erforderlich ist." },
+        { title: "Recht auf Löschung", desc: "Vollständige Löschung des Profils jederzeit." },
+        { title: "KI-Transparenz", desc: "KI ist nur Unterstützung; kein missbräuchliches Profiling, keine sensiblen Daten." },
+        {
+          title: "Beschränkter Zugriff",
+          desc: "Strukturierte Datenspeicherung mit Zugriffsprotokollen.",
+        },
+      ],
+    },
+    final: {
+      title: "Bereit für das richtige Match?",
+      sub: "Mitgliedsunternehmen veröffentlichen Stellen in der Pilotphase kostenlos. Talente treten dem Pool kostenfrei bei.",
+    },
+    footer: {
+      about:
+        "Die offizielle Jobbörse der Deutsch-Brasilianischen Industrie- und Handelskammer — sie verbindet Talente mit internationalem Profil mit deutschen und multinationalen Unternehmen.",
+      col1: "Für Unternehmen",
+      col2: "Für Talente",
+      col3: "Recht & Daten",
+      pricing: "Pläne & Matching",
+      privacy: "Datenschutzerklärung",
+      terms: "Nutzungsbedingungen",
+      ai: "Einsatz von KI",
+      legal:
+        "© 2026 Deutsch-Brasilianische Industrie- und Handelskammer (AHK São Paulo). Logo gemäß Corporate-Design-Handbuch.",
+      compliance: "Konform mit LGPD (Brasilien) & DSGVO (EU)",
+    },
+    vaga: {
+      back: "Zurück zu den Stellen",
+      profile: "Ideales Profil",
+      yourFit: "Ihre geschätzte Passung",
+      apply: "Auf diese Stelle bewerben",
+      applyNote:
+        "Mit Ihrer Bewerbung treten Sie dem kuratierten Talent-Pool der AHK bei — mit LGPD-Einwilligung.",
+    },
+    company: {
+      eyebrow: "Für Mitgliedsunternehmen",
+      title: "Stelle veröffentlichen",
+      sub: "Geben Sie die wichtigsten Daten an. Die KI standardisiert die Beschreibung und die AHK liefert eine qualifizierte Shortlist.",
+      trust:
+        "Exklusiver Service für Mitgliedsunternehmen der Deutsch-Brasilianischen Industrie- und Handelskammer. Datenverarbeitung gemäß LGPD/DSGVO.",
+      consent:
+        "Ich bestätige, dass wir Mitgliedsunternehmen der AHK sind, und akzeptiere die Nutzungsbedingungen und die Datenschutzerklärung.",
+      submit: "Stelle zur Kuratierung senden",
+      doneTitle: "Stelle erhalten!",
+      done: "Wir starten das KI-Matching und die AHK-Kuratierung. Sie erhalten in Kürze eine Shortlist qualifizierter Profile.",
+      benefits: [
+        { h: "Vorselektierte Talente", d: "Erhalten Sie eine Shortlist passender Profile." },
+        { h: "Weniger Zeit und Kosten", d: "Ersparnis gegenüber klassischen Headhuntern." },
+        { h: "AHK-Vertrauenssiegel", d: "Institutionelle Kuratierung der Deutsch-Brasilianischen Handelskammer." },
+        { h: "Kostenlos in der Pilotphase", d: "Kostenlose Veröffentlichung für ausgewählte Mitglieder." },
+      ],
+      fields: [
+        { name: "companyName", label: "Name des Unternehmens", kind: "text", placeholder: "z. B. Deutsche Industriegruppe", required: true },
+        { name: "contactEmail", label: "Kontakt-E-Mail (HR)", kind: "text", placeholder: "hr@unternehmen.com", required: true },
+        { name: "jobTitle", label: "Stellenbezeichnung", kind: "text", placeholder: "z. B. Engineering Manager", required: true },
+        { name: "area", label: "Bereich", kind: "select", options: ["Ingenieurwesen", "Außenhandel", "Nachhaltigkeit", "Personalwesen", "Technologie", "Finanzen"], required: true },
+        { name: "seniority", label: "Seniorität", kind: "select", options: ["Junior", "Mid-Level", "Senior", "Spezialist:in", "Führungskraft"], required: true },
+        { name: "languages", label: "Erforderliche Sprachen", kind: "select", options: ["Deutsch + Englisch", "Deutsch (fortgeschritten)", "Englisch (fortgeschritten)", "Englisch (Mittelstufe)"], required: true },
+        { name: "location", label: "Standort & Arbeitsmodell", kind: "text", placeholder: "z. B. São Paulo, SP — Hybrid", required: true },
+        { name: "description", label: "Stellenbeschreibung", kind: "area", placeholder: "Beschreibung einfügen — die KI standardisiert sie automatisch.", required: true },
+      ],
+    },
+    talent: {
+      eyebrow: "Für Talente",
+      title: "Zum Talent-Pool",
+      sub: "Kurze, transparente Registrierung. Ihr Profil wird für Stellen bei deutschen und multinationalen Unternehmen sichtbar.",
+      trust:
+        "KI wird nur zur Unterstützung von Kompatibilität und Zusammenfassung eingesetzt. Keine Entscheidung erfolgt ausschließlich automatisiert.",
+      consentDataLabel: "Dateneinwilligung (erforderlich)",
+      consentData:
+        "Ich willige in die Nutzung meiner Daten zur beruflichen Vermittlung und zum KI-gestützten Matching ein und kann sie jederzeit löschen lassen.",
+      consentComms:
+        "Ich möchte Neuigkeiten der Deutsch-Brasilianischen Handelskammer erhalten (optional).",
+      submit: "Zum Talent-Pool",
+      doneTitle: "Profil aufgenommen!",
+      done: "Ihr Profil wurde in den Talent-Pool der Deutsch-Brasilianischen Handelskammer aufgenommen. Wir melden uns bei Stellen mit hoher Passung.",
+      benefits: [
+        { h: "Exklusive Stellen", d: "Zugang zu deutschen und multinationalen Unternehmen." },
+        { h: "Mehr Sichtbarkeit", d: "Kuratierter Talent-Pool, weniger manuelle Bewerbungen." },
+        { h: "Intelligentes Matching", d: "Die KI verbindet Ihr Profil mit den richtigen Stellen." },
+        { h: "Immer kostenlos", d: "Für Talente ist der Service kostenfrei." },
+      ],
+      fields: [
+        // Persönliche Daten
+        { section: "Persönliche Daten", name: "fullName", label: "Vollständiger Name", kind: "text", placeholder: "Ihr Name", required: true },
+        { section: "Persönliche Daten", name: "email", label: "E-Mail", kind: "text", placeholder: "sie@email.com", required: true },
+        { section: "Persönliche Daten", name: "phone", label: "Telefon", kind: "text", placeholder: "+55 11 90000-0000" },
+        { section: "Persönliche Daten", name: "city", label: "Stadt / Bundesstaat", kind: "text", placeholder: "z. B. São Paulo, SP" },
+        { section: "Persönliche Daten", name: "linkedin", label: "LinkedIn", kind: "text", placeholder: "linkedin.com/in/ihr-profil" },
+        // Berufsprofil
+        { section: "Berufsprofil", name: "area", label: "Interessensbereich", kind: "select", options: ["Ingenieurwesen", "Außenhandel", "Nachhaltigkeit", "Personalwesen", "Technologie", "Finanzen"], required: true },
+        { section: "Berufsprofil", name: "currentRole", label: "Aktuelle / gewünschte Position", kind: "text", placeholder: "z. B. Engineering Manager" },
+        { section: "Berufsprofil", name: "seniority", label: "Seniorität", kind: "select", options: ["Junior", "Mid-Level", "Senior", "Spezialist:in", "Führungskraft"], required: true },
+        { section: "Berufsprofil", name: "yearsExperience", label: "Jahre Berufserfahrung", kind: "select", options: ["Weniger als 1 Jahr", "1–3 Jahre", "3–5 Jahre", "5–10 Jahre", "Mehr als 10 Jahre"] },
+        // Sprachen (GER/CEFR)
+        { section: "Sprachen", name: "germanLevel", label: "Deutsch (GER-Niveau)", kind: "select", options: ["Keine", "A1", "A2", "B1", "B2", "C1", "C2 / Muttersprache"], required: true },
+        { section: "Sprachen", name: "englishLevel", label: "Englisch (GER-Niveau)", kind: "select", options: ["Keine", "A1", "A2", "B1", "B2", "C1", "C2 / Muttersprache"], required: true },
+        // Internationales Profil Brasilien–Deutschland
+        { section: "Internationales Profil Brasilien–Deutschland", name: "germanCompanyExperience", label: "Erfahrung in deutschem / DACH-Unternehmen?", kind: "select", options: ["Ja", "Nein"] },
+        { section: "Internationales Profil Brasilien–Deutschland", name: "internationalExperience", label: "Beschreiben Sie Ihre internationale Erfahrung", kind: "text", placeholder: "z. B. 6 Jahre in deutschem Multinational" },
+        { section: "Internationales Profil Brasilien–Deutschland", name: "relocation", label: "Umzugsbereitschaft", kind: "select", options: ["Brasilien", "Deutschland", "Beide", "Nur remote"] },
+        { section: "Internationales Profil Brasilien–Deutschland", name: "workAuthorization", label: "Arbeitserlaubnis EU / Deutschland", kind: "select", options: ["EU-Pass", "Arbeitsvisum", "In Bearbeitung", "Nein / Sponsoring erforderlich"] },
+        // Lebenslauf
+        { section: "Lebenslauf", name: "summary", label: "Berufliches Kurzprofil", kind: "area", placeholder: "Beschreiben Sie kurz Profil, Erfolge und Ziele." },
+      ],
+      cv: {
+        label: "Lebenslauf als PDF",
+        hint: "PDF anhängen (max. 5 MB). Optional — LinkedIn und Kurzprofil helfen ebenfalls.",
+        button: "PDF auswählen",
+        uploading: "Wird hochgeladen…",
+        attached: "Angehängt",
+        remove: "Entfernen",
+        error: "Anhang fehlgeschlagen. Sie können auch ohne Lebenslauf absenden.",
+      },
+    },
+    legal: {
+      privacyTitle: "Datenschutzerklärung",
+      termsTitle: "Nutzungsbedingungen",
+      aiTitle: "Einsatz von Künstlicher Intelligenz",
+      updated: "Zuletzt aktualisiert",
+      privacy: [
+        {
+          h: "1. Zweck",
+          p: [
+            "AHK Talent Bridge verarbeitet personenbezogene Daten ausschließlich zur beruflichen Vermittlung zwischen Mitgliedsunternehmen der Deutsch-Brasilianischen Industrie- und Handelskammer und Talenten mit internationalem Profil.",
+            "Daten werden niemals verkauft, weitergegeben oder für andere als die hier genannten Zwecke verwendet.",
+          ],
+        },
+        {
+          h: "2. Einwilligung",
+          p: [
+            "Ihre Daten werden nur mit ausdrücklicher Einwilligung genutzt, die getrennt von der Marketing-Einwilligung erhoben wird.",
+            "Sie können die Einwilligung jederzeit widerrufen; damit wird Ihr Profil aus dem Talent-Pool gelöscht.",
+          ],
+        },
+        {
+          h: "3. Datenminimierung und Speicherung",
+          p: [
+            "Wir erheben nur die für das Matching wesentlichen Daten (Bereich, Seniorität, Sprachen, Erfahrung und Kontakt).",
+            "Die Daten bleiben gespeichert, solange das Profil aktiv ist, und werden auf Anfrage gelöscht.",
+          ],
+        },
+        {
+          h: "4. Ihre Rechte (LGPD / DSGVO)",
+          p: [
+            "Sie haben das Recht auf Auskunft, Berichtigung, Datenübertragbarkeit und Löschung Ihrer Daten sowie auf Information über die durchgeführte Verarbeitung.",
+            "Zur Ausübung Ihrer Rechte kontaktieren Sie uns über die auf der Plattform angegebenen Kanäle.",
+          ],
+        },
+        {
+          h: "5. Sicherheit",
+          p: [
+            "Die Daten werden strukturiert gespeichert, mit beschränktem Zugriff und Protokollierung von Zugriff und Nutzung.",
+          ],
+        },
+      ],
+      terms: [
+        {
+          h: "1. Gegenstand",
+          p: [
+            "Diese Bedingungen regeln die Nutzung von AHK Talent Bridge, der institutionellen Jobbörse der Deutsch-Brasilianischen Industrie- und Handelskammer.",
+          ],
+        },
+        {
+          h: "2. Teilnahmeberechtigung",
+          p: [
+            "Die Veröffentlichung von Stellen ist Mitgliedsunternehmen der AHK vorbehalten. Die Registrierung für Talente ist kostenlos und offen für Fachkräfte mit internationalem Profil.",
+          ],
+        },
+        {
+          h: "3. Verantwortungsvolle Nutzung",
+          p: [
+            "Die angegebenen Informationen müssen wahr und aktuell sein. Die AHK kann Inhalte moderieren, ablehnen oder entfernen, die gegen diese Bedingungen verstoßen.",
+          ],
+        },
+        {
+          h: "4. Keine Einstellungsgarantie",
+          p: [
+            "Der Service fördert die qualifizierte Verbindung zwischen Unternehmen und Talenten, garantiert jedoch keine Einstellung. Die endgültige Entscheidung ist immer menschlich und liegt beim Unternehmen.",
+          ],
+        },
+      ],
+      aiUse: [
+        {
+          h: "Wie wir KI einsetzen",
+          p: [
+            "Künstliche Intelligenz unterstützt die Standardisierung von Stellen und Profilen, die Berechnung eines erklärbaren Matching-Scores und die Erstellung von Executive Summaries.",
+            "Keine Entscheidung erfolgt ausschließlich automatisiert: Kuratierung und Endentscheidung sind immer menschlich.",
+          ],
+        },
+        {
+          h: "Transparenz und Grenzen",
+          p: [
+            "Die Matching-Kriterien sind objektiv und prüfbar. Wir betreiben kein missbräuchliches Profiling und verarbeiten keine sensiblen Daten.",
+            "Jedes Matching-Ergebnis dokumentiert das verwendete Modell und die Prompt-Version und ist damit nachvollziehbar.",
+          ],
+        },
+      ],
+    },
+    common: { formError: "Bitte prüfen Sie die Pflichtfelder.", submitting: "Wird gesendet…" },
   },
 };
 

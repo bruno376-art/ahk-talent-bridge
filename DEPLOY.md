@@ -71,6 +71,7 @@ $env:DATABASE_URL="libsql://ahk-talent-bridge-xxx.turso.io"
 $env:DATABASE_AUTH_TOKEN="SEU-TOKEN"
 npm run db:migrate:turso   # adiciona as novas colunas do Talent (idempotente)
 npm run db:seed:extra      # opcional: +3 vagas fictícias (não duplica)
+npm run db:translate:de    # adiciona a tradução alemã às vagas existentes (idempotente)
 ```
 
 ### Upload de CV em PDF (Vercel Blob — store PRIVADO)

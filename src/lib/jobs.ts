@@ -31,6 +31,7 @@ export async function getOpenJobsAllLangs(): Promise<Record<Lang, JobView[]>> {
   return {
     pt: jobs.map((j) => localizeJob(j as JobRow, "pt")),
     en: jobs.map((j) => localizeJob(j as JobRow, "en")),
+    de: jobs.map((j) => localizeJob(j as JobRow, "de")),
   };
 }
 
@@ -40,5 +41,6 @@ export async function getJobAllLangs(id: string): Promise<Record<Lang, JobView> 
   return {
     pt: localizeJob(job as JobRow, "pt"),
     en: localizeJob(job as JobRow, "en"),
+    de: localizeJob(job as JobRow, "de"),
   };
 }

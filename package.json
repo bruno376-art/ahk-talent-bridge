@@ -15,6 +15,7 @@
     "db:sql": "prisma migrate diff --from-empty --to-schema-datamodel prisma/schema.prisma --script",
     "db:seed": "tsx prisma/seed.ts",
     "db:seed:extra": "tsx prisma/seed-extra.ts",
+    "db:translate:de": "tsx scripts/add-de-translations.ts",
     "db:studio": "prisma studio",
     "db:generate": "prisma generate"
   },

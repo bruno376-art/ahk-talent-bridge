@@ -10,7 +10,7 @@ export default function JobDetail({ jobByLang }: { jobByLang: Record<Lang, JobVi
   const job = jobByLang[lang];
 
   return (
-    <main className="max-w-shell-detail mx-auto px-8 pt-11 pb-20">
+    <main className="max-w-shell-detail mx-auto px-5 md:px-8 pt-7 md:pt-11 pb-14 md:pb-20">
       <Link
         href="/#vagas"
         className="inline-flex items-center gap-2 text-[14.5px] font-bold text-ahk-blue cursor-pointer mb-7 no-underline"
@@ -20,7 +20,7 @@ export default function JobDetail({ jobByLang }: { jobByLang: Record<Lang, JobVi
 
       <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-8 items-start">
         <div>
-          <div className="bg-white border border-brand-border rounded-[16px] p-9">
+          <div className="bg-white border border-brand-border rounded-[16px] p-5 md:p-9">
             <div className="flex gap-3 flex-wrap mb-4">
               <span className="text-[12px] font-bold py-[5px] px-[11px] rounded-full bg-brand-blue-soft text-ahk-blue">
                 {job.model}
@@ -29,7 +29,7 @@ export default function JobDetail({ jobByLang }: { jobByLang: Record<Lang, JobVi
                 {job.area}
               </span>
             </div>
-            <h1 className="font-serif font-bold text-[34px] text-ahk-blue tracking-[-0.4px] mb-2">
+            <h1 className="font-serif font-bold text-[26px] md:text-[34px] text-ahk-blue tracking-[-0.4px] mb-2">
               {job.title}
             </h1>
             <div className="text-[16px] text-[#6B7583] font-semibold mb-[26px]">

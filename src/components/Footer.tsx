@@ -9,7 +9,7 @@ export default function Footer() {
 
   return (
     <footer className="bg-brand-blue-deep text-[#B9C7D9] border-t-4 border-ahk-cyan">
-      <div className="max-w-shell mx-auto px-8 pt-14 pb-[30px]">
+      <div className="max-w-shell mx-auto px-5 md:px-8 pt-10 md:pt-14 pb-[30px]">
         <div className="grid grid-cols-1 md:grid-cols-[1.4fr_1fr_1fr_1fr] gap-10 mb-11">
           <div>
             <div className="flex items-center gap-[11px] mb-4">

@@ -13,8 +13,8 @@ export default function LegalPage({ section }: { section: Section }) {
   const blocks = section === "privacy" ? legal.privacy : section === "terms" ? legal.terms : legal.aiUse;
 
   return (
-    <main className="max-w-shell-detail mx-auto px-8 pt-14 pb-24">
-      <h1 className="font-serif font-bold text-[40px] text-ahk-blue tracking-[-0.4px] mb-3">
+    <main className="max-w-shell-detail mx-auto px-5 md:px-8 pt-9 md:pt-14 pb-16 md:pb-24">
+      <h1 className="font-serif font-bold text-[30px] md:text-[40px] text-ahk-blue tracking-[-0.4px] mb-3">
         {title}
       </h1>
       <p className="text-[13.5px] text-brand-muted-2 font-semibold mb-10">
