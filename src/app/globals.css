@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: "Source Sans 3", system-ui, sans-serif;
+  --font-serif: "Source Serif 4", Georgia, serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: #474747;
+  background: #ffffff;
+  font-family: var(--font-sans);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: #ccd7e6;
+  color: #003366;
+}
+
+/* Utilitário do design: balanceamento de títulos */
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Hover das vagas (equivalente ao style-hover do protótipo) */
+.job-card {
+  transition: all 0.18s ease;
+}
+.job-card:hover {
+  border-color: #003366;
+  box-shadow: 0 18px 40px -26px rgba(0, 51, 102, 0.35);
+  transform: translateY(-2px);
+}
+
+/* Foco de campos de formulário */
+.field:focus {
+  border-color: #003366 !important;
+  box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.08);
+}

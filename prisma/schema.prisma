@@ -1,0 +1,120 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+/// Empresa associada à AHK que publica vagas.
+model Company {
+  id           String   @id @default(cuid())
+  name         String
+  isMember     Boolean  @default(false) // empresa associada à AHK?
+  contactName  String?
+  contactEmail String?
+  status       String   @default("active") // active | blocked
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  jobs         Job[]
+}
+
+/// Vaga publicada por uma empresa. Campos "structured*" e "translations"
+/// são JSON serializado (SQLite não tem tipo JSON nativo).
+model Job {
+  id                String   @id @default(cuid())
+  companyId         String?
+  company           Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  companyName       String // denormalizado p/ exibição
+  title             String
+  area              String
+  seniority         String
+  languages         String
+  location          String
+  model             String // Híbrido · SP | Remoto | Presencial · SP
+  rawDescription    String // texto original enviado pela empresa
+  summary           String   @default("")
+  tags              String   @default("[]") // JSON string[]
+  requirements      String   @default("[]") // JSON string[]
+  structuredProfile String? // JSON gerado pela IA (padronização)
+  translations      String? // JSON { pt: {...}, en: {...} } p/ conteúdo bilíngue
+  demoMatch         String? // ex.: "94%" (apenas dados de demonstração)
+  matchNote         String?
+  status            String   @default("open") // draft | open | closed
+  submittedLang     String   @default("pt")
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  matches           Match[]
+
+  @@index([status])
+}
+
+/// Talento no pool. structuredProfile é JSON gerado pela IA.
+model Talent {
+  id                      String    @id @default(cuid())
+  fullName                String
+  email                   String
+  area                    String
+  seniority               String
+  languages               String
+  internationalExperience String?
+  rawInput                String    @default("")
+  structuredProfile       String? // JSON gerado pela IA (estruturação)
+  status                  String    @default("active") // active | inactive | deleted
+  submittedLang           String    @default("pt")
+  createdAt               DateTime  @default(now())
+  updatedAt               DateTime  @updatedAt
+  consents                Consent[]
+  matches                 Match[]
+
+  @@index([status])
+  @@index([email])
+}
+
+/// Consentimentos SEPARADOS por finalidade (LGPD/GDPR by design).
+model Consent {
+  id            String    @id @default(cuid())
+  talentId      String
+  talent        Talent    @relation(fields: [talentId], references: [id], onDelete: Cascade)
+  type          String // data_processing | ai_matching | communications
+  granted       Boolean   @default(false)
+  policyVersion String    @default("2026-07")
+  grantedAt     DateTime? @default(now())
+  revokedAt     DateTime?
+
+  @@index([talentId])
+}
+
+/// Resultado de matching vaga × candidato, com rastreabilidade de IA.
+model Match {
+  id            String   @id @default(cuid())
+  jobId         String
+  job           Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  talentId      String
+  talent        Talent   @relation(fields: [talentId], references: [id], onDelete: Cascade)
+  score         Int // 0-100
+  justification String   @default("")
+  gap           String?
+  model         String   @default("")
+  promptVersion String   @default("")
+  createdAt     DateTime @default(now())
+
+  @@unique([jobId, talentId])
+  @@index([jobId])
+  @@index([score])
+}
+
+/// Trilha de auditoria (acesso, criação, exclusão, exportação).
+model AuditLog {
+  id         String   @id @default(cuid())
+  entityType String // job | talent | consent | match | company
+  entityId   String?
+  action     String // created | matched | shortlisted | deleted | exported | accessed
+  actor      String   @default("system") // system | admin | applicant | company
+  detail     String? // JSON livre
+  createdAt  DateTime @default(now())
+
+  @@index([entityType, entityId])
+}
