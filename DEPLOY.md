@@ -73,13 +73,15 @@ npm run db:migrate:turso   # adiciona as novas colunas do Talent (idempotente)
 npm run db:seed:extra      # opcional: +3 vagas fictícias (não duplica)
 ```
 
-### Upload de CV em PDF (Vercel Blob)
-1. Vercel → projeto → **Storage → Create → Blob** → conecte ao projeto.
-2. Isso injeta `BLOB_READ_WRITE_TOKEN` nas env vars automaticamente → **Redeploy**.
-3. Sem esse token, o formulário funciona normalmente e apenas pula o anexo (CV é opcional).
+### Upload de CV em PDF (Vercel Blob — store PRIVADO)
+1. Vercel → projeto → **Storage → Create → Blob** → acesso **Private** → conecte ao projeto.
+2. Isso injeta `BLOB_STORE_ID` (e usa OIDC automático da Vercel para autenticar) → **Redeploy**.
+3. Sem o store, o formulário funciona normalmente e apenas pula o anexo (CV é opcional).
 
-> **Nota LGPD:** a URL do Blob é pública porém não-adivinhável e só aparece no
-> backoffice. Para sigilo estrito, evoluir para storage privado com download autenticado.
+> **LGPD:** os CVs são **blobs privados** — não acessíveis por URL pública. O PDF só é
+> lido pela rota autenticada do backoffice (`/admin/talentos/[id]/cv`), com registro em
+> `AuditLog` (`accessed`). Em dev local, defina `BLOB_READ_WRITE_TOKEN` (via `vercel env pull`)
+> para testar o upload.
 
 ## Notas
 

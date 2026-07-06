@@ -5,19 +5,20 @@ const MAX_BYTES = 5 * 1024 * 1024; // 5 MB
 const ALLOWED = ["application/pdf"];
 
 /**
- * Recebe o PDF do CV e armazena no Vercel Blob, retornando a URL.
- * Sem BLOB_READ_WRITE_TOKEN (ex.: dev local), responde 503 e o formulário
- * segue funcionando sem o anexo (o CV é opcional).
+ * Recebe o PDF do CV e armazena no Vercel Blob como blob PRIVADO.
  *
- * Nota LGPD: a URL do Blob é pública porém não-adivinhável (sufixo aleatório)
- * e só é exposta no backoffice. Para sigilo estrito, evoluir para storage
- * privado com download autenticado.
+ * Blobs privados exigem autenticação para leitura (LGPD-friendly): não são
+ * acessíveis por URL pública. Na Vercel, a autenticação é automática via OIDC
+ * + BLOB_STORE_ID; localmente exige BLOB_READ_WRITE_TOKEN. Sem nenhum dos dois,
+ * responde 503 e o formulário segue funcionando sem o anexo (CV é opcional).
+ * A leitura do CV ocorre apenas pela rota autenticada do admin.
  */
 export async function POST(req: Request) {
   // Consome o corpo antes de qualquer retorno (evita reset de conexão).
   const form = await req.formData();
 
-  if (!process.env.BLOB_READ_WRITE_TOKEN) {
+  const blobConfigured = process.env.BLOB_STORE_ID || process.env.BLOB_READ_WRITE_TOKEN;
+  if (!blobConfigured) {
     return NextResponse.json(
       { error: "upload_disabled", message: "Armazenamento de arquivos não configurado." },
       { status: 503 },
@@ -37,10 +38,11 @@ export async function POST(req: Request) {
 
   const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_").slice(-80) || "cv.pdf";
   const blob = await put(`cv/${safeName}`, file, {
-    access: "public",
+    access: "private",
     addRandomSuffix: true,
     contentType: "application/pdf",
   });
 
+  // Guardamos a URL do blob privado; a leitura só acontece pela rota autenticada.
   return NextResponse.json({ url: blob.url, filename: file.name });
 }

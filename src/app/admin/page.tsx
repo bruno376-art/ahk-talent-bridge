@@ -164,7 +164,7 @@ export default async function AdminDashboard({
                       <span className="inline-flex items-center gap-3">
                         {tt.cvUrl && (
                           <a
-                            href={tt.cvUrl}
+                            href={`/admin/talentos/${tt.id}/cv`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-ahk-blue font-bold text-[13px] underline"
