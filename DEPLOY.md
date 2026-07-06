@@ -5,17 +5,24 @@ Deve ser um **projeto Vercel próprio**, separado do EU-Mercosul.
 
 ## 1. Banco de dados (Turso)
 
-```bash
-# criar o banco de produção
-turso db create ahk-talent-bridge
-turso db show ahk-talent-bridge --url          # -> DATABASE_URL (libsql://...)
-turso db tokens create ahk-talent-bridge       # -> DATABASE_AUTH_TOKEN
+Crie o banco no painel [turso.tech](https://turso.tech) (ou via CLI) e copie a
+**URL** (`libsql://...`) e um **token**.
 
-# aplicar o schema no banco de produção
-DATABASE_URL="libsql://...turso.io" DATABASE_AUTH_TOKEN="..." npx prisma db push
-# (opcional) semear as 4 vagas de demonstração:
-DATABASE_URL="libsql://...turso.io" DATABASE_AUTH_TOKEN="..." npm run db:seed
+> ⚠️ **Não use `prisma db push` contra o Turso.** O provider é `sqlite` e o engine
+> nativo do Prisma exige `file:` — daí o erro *"the URL must start with the protocol
+> `file:`"*. Aplique o schema via cliente libSQL, com o script incluído:
+
+No **PowerShell**, dentro da pasta do projeto (substitua pelos valores reais):
+
+```powershell
+$env:DATABASE_URL="libsql://ahk-talent-bridge-xxx.turso.io"
+$env:DATABASE_AUTH_TOKEN="SEU-TOKEN"
+npm run db:push:turso   # cria as tabelas no Turso (idempotente)
+npm run db:seed         # opcional: 4 vagas de demonstração
 ```
+
+O `schema.sql` já está versionado. Se mudar o `prisma/schema.prisma`, regenere com
+`npm run db:sql > schema.sql` e rode `db:push:turso` de novo.
 
 ## 2. Projeto na Vercel
 
