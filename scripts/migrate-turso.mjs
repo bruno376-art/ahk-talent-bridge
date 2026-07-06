@@ -20,6 +20,16 @@ if (!url.startsWith("libsql://") && !url.startsWith("https://") && !url.startsWi
   process.exit(1);
 }
 
+const PLACEHOLDERS = ["SEU-TOKEN", "SEU-TOKEN-NOVO", "COLE-O-TOKEN-NOVO-AQUI", ""];
+if (url.startsWith("libsql://") && (!authToken || PLACEHOLDERS.includes(authToken))) {
+  console.error(
+    "✖ DATABASE_AUTH_TOKEN está vazio ou é um placeholder (ex.: \"SEU-TOKEN\").\n" +
+      "  Cole o TOKEN REAL do Turso. Gere um em:\n" +
+      "  https://app.turso.tech/bruno376/databases/ahk-talent-bridge  → Create Token",
+  );
+  process.exit(1);
+}
+
 const client = createClient({ url, authToken });
 
 /** Colunas adicionadas ao Talent (form de CV). Todas nullable => seguras. */
