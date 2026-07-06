@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useI18n } from "@/i18n/LanguageProvider";
 import { submitJob } from "@/app/actions/submit";
 import Field from "./Field";
+import Honeypot from "./Honeypot";
 import FormShell, { SuccessPanel } from "./FormShell";
 
 export default function CompanyForm() {
@@ -36,6 +37,7 @@ export default function CompanyForm() {
       location: values.location,
       description: values.description,
       consent: true,
+      website: values.website ?? "",
       lang,
     });
     setSubmitting(false);
@@ -57,6 +59,7 @@ export default function CompanyForm() {
         <SuccessPanel title={c.doneTitle} message={c.done} />
       ) : (
         <div className="flex flex-col gap-5">
+          <Honeypot value={values.website ?? ""} onChange={set("website")} />
           {c.fields.map((f) => (
             <Field key={f.name} field={f} value={values[f.name] ?? ""} onChange={set(f.name)} />
           ))}

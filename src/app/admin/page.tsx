@@ -2,6 +2,7 @@ import { prisma } from "@/lib/db";
 import { logout, triggerMatching, triggerShortlist } from "./actions";
 import { Logo } from "@/components/Header";
 import { isAIConfigured } from "@/lib/ai/anthropic";
+import DeleteTalentButton from "@/components/admin/DeleteTalentButton";
 
 export const dynamic = "force-dynamic";
 
@@ -67,7 +68,9 @@ export default async function AdminDashboard({
           <div className="bg-brand-green-soft border border-[#C7E9DB] text-[#1F8F6B] rounded-lg px-4 py-3 text-[14px] font-semibold">
             {ran === "matching"
               ? "Matching disparado (processando em background via Inngest)."
-              : "Geração de shortlist disparada."}
+              : ran === "deleted"
+                ? "Talento e dados relacionados excluídos (LGPD/GDPR)."
+                : "Geração de shortlist disparada."}
           </div>
         )}
 
@@ -137,6 +140,7 @@ export default async function AdminDashboard({
                 <th className={th}>Senioridade</th>
                 <th className={th}>Consentimentos</th>
                 <th className={th}>Status</th>
+                <th className={th}>Dados (LGPD)</th>
               </tr>
             </thead>
             <tbody>
@@ -156,12 +160,23 @@ export default async function AdminDashboard({
                       </span>
                     </td>
                     <td className={td}>{tt.status}</td>
+                    <td className={td}>
+                      <span className="inline-flex items-center gap-3">
+                        <a
+                          href={`/admin/talentos/${tt.id}/export`}
+                          className="text-ahk-blue font-bold text-[13px] underline"
+                        >
+                          Exportar
+                        </a>
+                        <DeleteTalentButton id={tt.id} name={tt.fullName} />
+                      </span>
+                    </td>
                   </tr>
                 );
               })}
               {talents.length === 0 && (
                 <tr>
-                  <td className={td} colSpan={5}>
+                  <td className={td} colSpan={6}>
                     Nenhum talento cadastrado ainda.
                   </td>
                 </tr>

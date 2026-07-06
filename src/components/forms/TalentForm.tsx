@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useI18n } from "@/i18n/LanguageProvider";
 import { submitTalent } from "@/app/actions/submit";
 import Field from "./Field";
+import Honeypot from "./Honeypot";
 import FormShell, { SuccessPanel } from "./FormShell";
 
 export default function TalentForm() {
@@ -36,6 +37,7 @@ export default function TalentForm() {
       internationalExperience: values.internationalExperience ?? "",
       consentData: true,
       consentComms,
+      website: values.website ?? "",
       lang,
     });
     setSubmitting(false);
@@ -57,6 +59,7 @@ export default function TalentForm() {
         <SuccessPanel title={c.doneTitle} message={c.done} />
       ) : (
         <div className="flex flex-col gap-5">
+          <Honeypot value={values.website ?? ""} onChange={set("website")} />
           {c.fields.map((f) => (
             <Field key={f.name} field={f} value={values[f.name] ?? ""} onChange={set(f.name)} />
           ))}

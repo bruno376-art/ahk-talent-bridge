@@ -80,8 +80,16 @@ normalmente e apenas pula os passos de IA.
 - Consentimentos **separados** por finalidade: `data_processing`, `ai_matching`,
   `communications` (tabela `Consent`).
 - Todo cenário de matching filtra por consentimento de IA ativo.
+- **Direitos do titular no admin**: exportar perfil em JSON (acesso/portabilidade) e
+  excluir com cascata (direito de exclusão) — ambos registrados em `AuditLog`.
 - Trilha de auditoria (`AuditLog`) para criação/exclusão/exportação.
 - Sem decisão exclusivamente automatizada; curadoria e decisão final humanas.
+
+## Testes
+
+```bash
+npm test          # Vitest: i18n (paridade PT/EN), localização de vagas, auth do admin, validação
+```
 
 ## Deploy (Vercel)
 

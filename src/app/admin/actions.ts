@@ -4,6 +4,8 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { ADMIN_COOKIE, makeAdminToken } from "@/lib/admin-auth";
 import { inngest, EVENTS } from "@/lib/inngest/client";
+import { prisma } from "@/lib/db";
+import { audit } from "@/lib/audit";
 
 export async function login(formData: FormData): Promise<void> {
   const password = String(formData.get("password") ?? "");
@@ -37,4 +39,18 @@ export async function triggerShortlist(formData: FormData): Promise<void> {
   const jobId = String(formData.get("jobId") ?? "");
   if (jobId) await inngest.send({ name: EVENTS.shortlistGenerate, data: { jobId } });
   redirect("/admin?ran=shortlist");
+}
+
+/**
+ * Direito de exclusão (LGPD/GDPR): remove o talento e, em cascata,
+ * seus consentimentos e matches. A entrada de auditoria é preservada
+ * (referencia o id por valor, sem FK).
+ */
+export async function deleteTalent(formData: FormData): Promise<void> {
+  const talentId = String(formData.get("talentId") ?? "");
+  if (talentId) {
+    await prisma.talent.delete({ where: { id: talentId } });
+    await audit({ entityType: "talent", entityId: talentId, action: "deleted", actor: "admin" });
+  }
+  redirect("/admin?ran=deleted");
 }

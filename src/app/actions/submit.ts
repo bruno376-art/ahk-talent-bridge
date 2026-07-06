@@ -1,9 +1,9 @@
 "use server";
 
-import { z } from "zod";
 import { prisma } from "@/lib/db";
 import { audit } from "@/lib/audit";
 import { inngest, EVENTS } from "@/lib/inngest/client";
+import { jobSchema, talentSchema, isHoneypotTripped } from "@/lib/validation";
 import type { Lang } from "@/i18n/dictionary";
 
 const POLICY_VERSION = "2026-07";
@@ -26,25 +26,15 @@ export interface ActionResult {
 }
 
 /* ───────── Empresa: publicar vaga ───────── */
-const jobSchema = z.object({
-  companyName: z.string().min(2),
-  contactEmail: z.string().email(),
-  jobTitle: z.string().min(2),
-  area: z.string().min(1),
-  seniority: z.string().min(1),
-  languages: z.string().min(1),
-  location: z.string().min(2),
-  description: z.string().min(10),
-  consent: z.literal(true), // confirma associação + termos
-  lang: z.enum(["pt", "en"]).default("pt"),
-});
-
 export async function submitJob(raw: unknown): Promise<ActionResult> {
   const parsed = jobSchema.safeParse(raw);
   if (!parsed.success) {
     return { ok: false, error: "invalid" };
   }
   const d = parsed.data;
+
+  // Honeypot: finge sucesso e descarta silenciosamente (não persiste).
+  if (isHoneypotTripped(d)) return { ok: true };
 
   try {
     const company = await prisma.company.create({
@@ -84,24 +74,15 @@ export async function submitJob(raw: unknown): Promise<ActionResult> {
 }
 
 /* ───────── Talento: entrar no talent pool ───────── */
-const talentSchema = z.object({
-  fullName: z.string().min(2),
-  email: z.string().email(),
-  area: z.string().min(1),
-  seniority: z.string().min(1),
-  languages: z.string().min(1),
-  internationalExperience: z.string().optional().default(""),
-  consentData: z.literal(true), // obrigatório (dados + matching IA)
-  consentComms: z.boolean().default(false),
-  lang: z.enum(["pt", "en"]).default("pt"),
-});
-
 export async function submitTalent(raw: unknown): Promise<ActionResult> {
   const parsed = talentSchema.safeParse(raw);
   if (!parsed.success) {
     return { ok: false, error: "invalid" };
   }
   const d = parsed.data;
+
+  // Honeypot: finge sucesso e descarta silenciosamente (não persiste).
+  if (isHoneypotTripped(d)) return { ok: true };
 
   try {
     const talent = await prisma.talent.create({
